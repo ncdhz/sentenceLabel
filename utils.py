@@ -22,53 +22,52 @@ class Tools:
     
     SentName = 'sentName'
 
-    SegmentationFunc = 'sent_list = sent_tokenize(article)'
+def SegmentationFunc():
+    return f'from nltk.tokenize import sent_tokenize\nsent_list = sent_tokenize({Tools.Article})'
 
-    @staticmethod
-    def refresh():
-        Tools.Answer = 'answer'
-        Tools.Question = 'question'
-        Tools.Article = 'article'
-        Tools.Options = 'options'
-        Tools.Data = 'data'
-        Tools.Sentences = 'sentences'
-        Tools.Number = 'number'
-        Tools.SentList = 'sent_list'
+def refresh():
+    Tools.Answer = 'answer'
+    Tools.Question = 'question'
+    Tools.Article = 'article'
+    Tools.Options = 'options'
+    Tools.Data = 'data'
+    Tools.Sentences = 'sentences'
+    Tools.Number = 'number'
+    Tools.SentList = 'sent_list'
 
-    @staticmethod
-    def injection(config):
-        if type(config) != dict:
+def injection(config):
+    if type(config) != dict:
+        return False
+    if type(config) == dict:
+        answer = config.get('answer', 'answer')
+        question = config.get('question', 'question')
+        article = config.get('article', 'article')
+        options = config.get('options', 'options')
+        data = config.get('data', 'data')
+        sentences = config.get('sentences', 'sentences')
+        number = config.get('number', 'number')
+        if type(answer) != str:
             return False
-        if type(config) == dict:
-            answer = config.get('answer', 'answer')
-            question = config.get('question', 'question')
-            article = config.get('article', 'article')
-            data = config.get('data', 'data')
-            options = config.get('options', 'options')
-            sentences = config.get('sentences', 'sentences')
-            number = config.get('number', 'number')
-            if type(answer) != str:
-                return False
-            if type(question) != str:
-                return False
-            if type(article) != str:
-                return False
-            if type(data) != str:
-                return False
-            if type(options) != str:
-                return False
-            if type(sentences) != str:
-                return False
-            if type(number) != str:
-                return False
-            Tools.Answer = answer
-            Tools.Question = question
-            Tools.Article = article
-            Tools.Options = options
-            Tools.Data = data
-            Tools.Sentences = sentences
-            Tools.Number = number
-        return True
+        if type(question) != str:
+            return False
+        if type(article) != str:
+            return False
+        if type(data) != str:
+            return False
+        if type(options) != str:
+            return False
+        if type(sentences) != str:
+            return False
+        if type(number) != str:
+            return False
+        Tools.Answer = answer
+        Tools.Question = question
+        Tools.Article = article
+        Tools.Options = options
+        Tools.Data = data
+        Tools.Sentences = sentences
+        Tools.Number = number
+    return True
 
 def check_segmentation(segmentation):
     exec(f'''{Tools.Article} = "my name is xiaoming. I am very happy every day."\n''' + segmentation)
@@ -78,9 +77,10 @@ def check_segmentation(segmentation):
         assert type(s) == str
 
 def check_format(d):
-    assert type(d[Tools.Answer]) == str
+    assert type(d[Tools.Answer]) == str or type(d[Tools.Answer]) == int
     assert d[Tools.Answer] != ''
-    assert len(d[Tools.Answer]) == 1
+    if type(d[Tools.Answer]) == str:
+        assert len(d[Tools.Answer]) == 1
     if not is_int(d[Tools.Answer]):
         assert is_a2z(d[Tools.Answer])
     assert d[Tools.Question] != ''

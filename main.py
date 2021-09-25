@@ -42,7 +42,6 @@ class MainWindow(QMainWindow):
         self.delete_all_action = QAction('Delete all', self)
 
         self.document_action = QAction('Document', self)
-        self.about_action = QAction('About', self)
         self.main_panel = MainPanel(self)
         self.setWindowIcon(QIcon('images/logo.png'))
         self.setCentralWidget(self.main_panel)
@@ -69,7 +68,6 @@ class MainWindow(QMainWindow):
         self.edit_menu.addAction(self.delete_all_action)
 
         self.help_menu.addAction(self.document_action)
-        self.help_menu.addAction(self.about_action)
 
     def toolbar_init(self):
         self.file_toolbar.addAction(self.open_action)
@@ -85,7 +83,6 @@ class MainWindow(QMainWindow):
         self.edit_toolbar.addAction(self.copy_action)
         self.edit_toolbar.addAction(self.paste_action)
         self.edit_toolbar.addAction(self.document_action)
-        self.edit_toolbar.addAction(self.about_action)
 
     def status_bar_init(self):
         self.status_bar.showMessage('Ready Go !!!')
@@ -162,16 +159,9 @@ class MainWindow(QMainWindow):
         self.document_action.setStatusTip('Open the document')
         self.document_action.triggered.connect(self.document_func)
 
-        self.about_action.setIcon(QIcon('images/about.png'))
-        self.about_action.setShortcut('Ctrl+B')
-        self.about_action.setToolTip('About us')
-        self.about_action.setStatusTip('About us')
-
         self.mime_data = QMimeData()
         self.clipboard = QApplication.clipboard()
 
-        self.about_action.triggered.connect(self.about_func)
-    
     def delete_current_func(self):
         if self.edit_data:
             self.is_save = False
@@ -203,8 +193,8 @@ class MainWindow(QMainWindow):
         if not self.edit_data:
             QMessageBox.information(self, 'Save', 'File not open!!!', QMessageBox.Yes)
             return
-        with open(self.file, 'w') as f:
-            json.dump(self.edit_data, f, indent=4)
+        with open(self.file, 'w', encoding='utf-8') as f:
+            json.dump(self.edit_data, f, indent=4, ensure_ascii=False)
         self.is_save = True
 
     def save_as_func(self):
@@ -213,8 +203,8 @@ class MainWindow(QMainWindow):
             return
         file = QFileDialog.getSaveFileName(self, 'Save File', './', 'Files (*.json *.txt)')
         if file[0]:
-            with open(file[0], 'w') as f:
-                json.dump(self.edit_data, f, indent=4)
+            with open(file[0], 'w', encoding='utf-8') as f:
+                json.dump(self.edit_data, f, indent=4, ensure_ascii=False)
             self.file = file[0]
             self.is_save = True
 
@@ -229,7 +219,7 @@ class MainWindow(QMainWindow):
             self.is_save = True
             self.segmentation = ''
             self.main_panel.refresh()
-            Tools.refresh()
+            utils.refresh()
         
         return save
 
@@ -237,8 +227,8 @@ class MainWindow(QMainWindow):
         if not self.is_save:
             save = QMessageBox.information(self, 'Save', 'Whether to save changes?', QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
             if save == QMessageBox.Yes:
-                with open(self.file, 'w') as f:
-                    json.dump(self.edit_data, f, indent=4)
+                with open(self.file, 'w', encoding='utf-8') as f:
+                    json.dump(self.edit_data, f, indent=4, ensure_ascii=False)
                 self.is_save = True
             return save
         return QMessageBox.Yes
@@ -311,15 +301,15 @@ class MainWindow(QMainWindow):
                 self.edit_data = {
                     Tools.Data: [jd]
                 }
+                self.segmentation = self.edit_data.get(Tools.Segmentation, utils.SegmentationFunc())
             self.end += 1
+            self.is_save = False 
             self.main_panel.refresh()
         except:
-            self.data_format_error()
+            self.data_format_error(is_data=True)
 
 
     def document_func(self):
-        pass
-    def about_func(self):
         pass
 
     def open_func(self):
@@ -329,17 +319,16 @@ class MainWindow(QMainWindow):
             if cf == QMessageBox.Cancel:
                 return
             try:
-                with open(file, 'r') as f:
+                with open(file, 'r', encoding='utf-8') as f:
                     self.edit_data = json.load(f)
 
                 config = self.edit_data.get(Tools.Config, {})
 
-                is_config = Tools.injection(config)
+                is_config = utils.injection(config)
 
                 if not is_config:
                     self.config_format_error()
                     return
-
                 try:
                     if Tools.Segmentation in self.edit_data and Tools.SentName in self.edit_data:
                         sn = self.edit_data[Tools.SentName]
@@ -350,15 +339,16 @@ class MainWindow(QMainWindow):
                         Tools.SentList = self.edit_data[Tools.SentName]
                 except Exception:
                     QMessageBox.critical(self, 'Variable name Error', f'''<pre>Variable name Error:<p style="color:rgba(255, 0, 0, 0.8)">[sentName] is a variable name</p></pre>''', QMessageBox.StandardButton.Ok)
-                    Tools.refresh()
+                    utils.refresh()
                     return
                 try:
                     # 动态定义切分文章问方法的函数
-                    self.segmentation = self.edit_data.get(Tools.Segmentation, Tools.SegmentationFunc)
+                    self.segmentation = self.edit_data.get(Tools.Segmentation, utils.SegmentationFunc())
                     utils.check_segmentation(self.segmentation)
                 except Exception:
                     QMessageBox.critical(self, 'Segmentation Error', f'''<pre>Segmentation Error:<p style="color:rgba(255, 0, 0, 0.8)">input: article<br/>output:{Tools.SentList}<br/>{Tools.SentList}: a string list<br/></p></pre>''', QMessageBox.StandardButton.Ok)
-                    Tools.refresh()
+                    utils.refresh()
+                    self.segmentation = ''
                     return
 
                 for d in self.edit_data[Tools.Data]:
@@ -368,9 +358,9 @@ class MainWindow(QMainWindow):
                 self.middle = 0
                 self.file = file
                 self.main_panel.refresh()
-            except Exception:
-                Tools.refresh()
+            except Exception as ex:
                 self.data_format_error()
+                utils.refresh()
 
     def config_format_error(self):
         correct_format = {
@@ -387,11 +377,14 @@ class MainWindow(QMainWindow):
         f'''<pre>Correct Format:<pre style="color:rgba(255, 0, 0, 0.8)">{correct_format}</pre></pre>
         ''', QMessageBox.StandardButton.Ok)
 
-    def data_format_error(self):
+    def data_format_error(self, is_data=False):
         correct_format = {
-                    "data": [{Tools.Answer: "str", Tools.Options: ["str", "..."], Tools.Question: "str", Tools.Article: "str"}]
+                    Tools.Data: [{Tools.Answer: "str/int", Tools.Options: ["str", "..."], Tools.Question: "str", Tools.Article: "str"}]
                 }
-        correct_format = json.dumps(correct_format, indent=4)
+        if is_data:
+            correct_format = json.dumps(correct_format[Tools.Data][0], indent=4)
+        else:
+            correct_format = json.dumps(correct_format, indent=4)
         QMessageBox.critical(self, 'Format Error', 
         f'''<pre>Correct Format:<pre style="color:rgba(255, 0, 0, 0.8)">{correct_format}</pre></pre>
         ''', QMessageBox.StandardButton.Ok)

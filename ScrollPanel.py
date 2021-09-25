@@ -1,6 +1,5 @@
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QTextBrowser
-from nltk.tokenize import sent_tokenize
 from utils import Tools
 import utils
 class ScrollPanel(QWidget):
@@ -66,9 +65,9 @@ class ScrollPanel(QWidget):
         if middle >= start and middle < end and edit_data:
             d = edit_data[Tools.Data][middle]
             if self.panel == ScrollPanel.Left:
-                locals()[Tools.Article] = d[Tools.Article]
-                exec(self.pt.segmentation)
-                sent_list_ = locals()[Tools.SentList]
+                los = {Tools.Article : d[Tools.Article]}
+                exec(self.pt.segmentation, {}, los)
+                sent_list_ = los[Tools.SentList]
                 ss =  self.pt.edit_data[Tools.Data][self.pt.middle].get(Tools.Sentences, [])
                 for s in sent_list_:
                     item = QListWidgetItem()
