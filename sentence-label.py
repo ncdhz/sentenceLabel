@@ -1,11 +1,25 @@
+# Copyright 2021 ncdhz
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import sys
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QApplication, QInputDialog, QMainWindow, QAction, QFileDialog, QMessageBox
-from PyQt5.QtCore import QMimeData
-from MainPanel import MainPanel
+from PyQt5.QtCore import QMimeData, QUrl
+from sentenceLabel.MainPanel import MainPanel
 import json
-from utils import Tools
-import utils
+from sentenceLabel.utils import Tools
+from sentenceLabel import utils
 
 class MainWindow(QMainWindow):
     
@@ -42,8 +56,8 @@ class MainWindow(QMainWindow):
         self.delete_all_action = QAction('Delete all', self)
 
         self.document_action = QAction('Document', self)
-        self.main_panel = MainPanel(self)
-        self.setWindowIcon(QIcon('images/logo.png'))
+        self.main_panel = MainPanel(self, 'icons/left.png', 'icons/right.png', 'icons/move-left.png', 'icons/move-right.png')
+        self.setWindowIcon(QIcon('icons/logo.png'))
         self.setCentralWidget(self.main_panel)
         self.menu_init()
         self.toolbar_init()
@@ -88,72 +102,72 @@ class MainWindow(QMainWindow):
         self.status_bar.showMessage('Ready Go !!!')
     
     def action_init(self):
-        self.open_action.setIcon(QIcon('images/open.png'))
+        self.open_action.setIcon(QIcon('icons/open.png'))
         self.open_action.setShortcut('Ctrl+O')
         self.open_action.setToolTip('Open an existing file')
         self.open_action.setStatusTip('Open an existing file')
         self.open_action.triggered.connect(self.open_func)
 
-        self.save_action.setIcon(QIcon('images/save.png'))
+        self.save_action.setIcon(QIcon('icons/save.png'))
         self.save_action.setShortcut('Ctrl+S')
         self.save_action.setToolTip('Save the file')
         self.save_action.setStatusTip('Save the file')
         self.save_action.triggered.connect(self.save_func)
 
-        self.save_as_action.setIcon(QIcon('images/save-as.png'))
+        self.save_as_action.setIcon(QIcon('icons/save-as.png'))
         self.save_as_action.setShortcut('Ctrl+A')
         self.save_as_action.setToolTip('Save the file to a specified location')
         self.save_as_action.setStatusTip('Save the file to a specified location')
         self.save_as_action.triggered.connect(self.save_as_func)
 
-        self.close_action.setIcon(QIcon('images/close.png'))
+        self.close_action.setIcon(QIcon('icons/close.png'))
         self.close_action.setShortcut('Ctrl+E')
         self.close_action.setToolTip('Close the file')
         self.close_action.setStatusTip('Close the file')
         self.close_action.triggered.connect(self.close_func)
 
 
-        self.left_action.setIcon(QIcon('images/xiangzuo.png'))
+        self.left_action.setIcon(QIcon('icons/xiangzuo.png'))
         self.left_action.setShortcut('A')
         self.left_action.setToolTip('Towards the left')
         self.left_action.setStatusTip('Towards the left')
         self.left_action.triggered.connect(self.left_func)
 
-        self.right_action.setIcon(QIcon('images/xiangyou.png'))
+        self.right_action.setIcon(QIcon('icons/xiangyou.png'))
         self.right_action.setShortcut('D')
         self.right_action.setToolTip('Towards the right')
         self.right_action.setStatusTip('Towards the right')
         self.right_action.triggered.connect(self.right_func)
 
-        self.jump_action.setIcon(QIcon('images/jump.png'))
+        self.jump_action.setIcon(QIcon('icons/jump.png'))
         self.jump_action.setShortcut('Ctrl+J')
         self.jump_action.setToolTip('Move to specified article')
         self.jump_action.setStatusTip('Move to specified article')
         self.jump_action.triggered.connect(self.jump_func)
 
-        self.delete_current_action.setIcon(QIcon('images/d1.png'))
+        self.delete_current_action.setIcon(QIcon('icons/d1.png'))
         self.delete_current_action.setToolTip('Delete current labels')
         self.delete_current_action.setStatusTip('Delete current labels')
         self.delete_current_action.triggered.connect(self.delete_current_func)
 
-        self.delete_all_action.setIcon(QIcon('images/d2.png'))
+        self.delete_all_action.setIcon(QIcon('icons/d2.png'))
         self.delete_all_action.setToolTip('Delete all labels')
         self.delete_all_action.setStatusTip('Delete all labels')
         self.delete_all_action.triggered.connect(self.delete_all_func)
 
-        self.copy_action.setIcon(QIcon('images/copy.png'))
+        self.copy_action.setIcon(QIcon('icons/copy.png'))
         self.copy_action.setShortcut('Ctrl+C')
         self.copy_action.setToolTip('Copy the text')
         self.copy_action.setStatusTip('Copy the text')
         self.copy_action.triggered.connect(self.copy_func)
 
-        self.paste_action.setIcon(QIcon('images/paste.png'))
+        self.paste_action.setIcon(QIcon('icons/paste.png'))
         self.paste_action.setShortcut('Ctrl+V')
         self.paste_action.setToolTip('Paste the text')
         self.paste_action.setStatusTip('Paste the text')
         self.paste_action.triggered.connect(self.paste_func)
 
-        self.document_action.setIcon(QIcon('images/document.png'))
+        self.document_action.setIcon(QIcon('icons/document.png'))
         self.document_action.setShortcut('Ctrl+D')
         self.document_action.setToolTip('Open the document')
         self.document_action.setStatusTip('Open the document')
@@ -310,7 +324,7 @@ class MainWindow(QMainWindow):
 
 
     def document_func(self):
-        pass
+        QDesktopServices.openUrl(QUrl('http://www.myhwx.com/sentence-label'))
 
     def open_func(self):
         file, _ = QFileDialog.getOpenFileName(self, 'Open File', './', 'Files (*.txt *.json)')
@@ -389,10 +403,12 @@ class MainWindow(QMainWindow):
         f'''<pre>Correct Format:<pre style="color:rgba(255, 0, 0, 0.8)">{correct_format}</pre></pre>
         ''', QMessageBox.StandardButton.Ok)
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv) 
+def main():
+    app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.setWindowTitle('Sentence Label')
-    main_window.show()                 
-    sys.exit(app.exec_())         
+    main_window.show()
+    return app.exec_()
+
+if __name__ == '__main__':
+    sys.exit(main())  

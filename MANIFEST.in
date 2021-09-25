@@ -1,0 +1,8 @@
+include LICENSE
+include README.md
+recursive-include icons *
+recursive-include sentenceLabel *.py
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude docs *
