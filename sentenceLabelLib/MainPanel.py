@@ -14,8 +14,8 @@
 
 from PyQt5.QtWidgets import QWidget, QSplitter, QHBoxLayout
 from PyQt5.QtCore import Qt
-from libs.LeftRightLabel import Label
-from libs.ScrollPanel import ScrollPanel
+from sentenceLabelLib.LeftRightLabel import Label
+from sentenceLabelLib.ScrollPanel import ScrollPanel
 
 class MainPanel(QWidget):
     def __init__(self, parent, icon_path_left, icon_path_right, move_icon_path_left, move_icon_path_right):

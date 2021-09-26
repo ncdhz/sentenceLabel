@@ -20,10 +20,11 @@ NAME = 'sentenceLabel'
 APP = [NAME + '.py']
 REQUIRES_PYTHON = '>=3.0.0'
 required_packages = find_packages()
+required_packages.append('sentenceLabel')
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
 
-with open(os.path.join(here, 'libs', '__init__.py')) as f:
+with open(os.path.join(here, 'sentenceLabelLib', '__init__.py')) as f:
     exec(f.read(), about)
 
 OPTIONS = {
@@ -47,8 +48,8 @@ setup(
     author='ncdhz',
     author_email='1137436221@qq.com',
     description='多项选择文章打标软件',
-    long_description=open("README.md", "r", encoding="utf-8").read(),
-    url='https://github.com/ncdhz/sentence-label',
+    long_description='`更多信息请关注 Github <https://github.com/ncdhz/sentenceLabel>`',
+    url='https://github.com/ncdhz/sentenceLabel',
     python_requires=REQUIRES_PYTHON,
     package_dir={'sentenceLabel': '.'},
     packages=required_packages,

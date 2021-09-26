@@ -16,11 +16,11 @@ import sys
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QApplication, QInputDialog, QMainWindow, QAction, QFileDialog, QMessageBox
 from PyQt5.QtCore import QMimeData, QUrl
-from libs.MainPanel import MainPanel
+from sentenceLabelLib.MainPanel import MainPanel
 import json
-from libs.resources import *
-from libs.utils import Tools
-from libs import utils
+from sentenceLabelLib.resources import *
+from sentenceLabelLib.utils import Tools
+from sentenceLabelLib import utils
 
 class MainWindow(QMainWindow):
     

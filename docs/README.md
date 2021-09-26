@@ -21,7 +21,32 @@ C: 回家睡觉
 
 ## 教程地址
 
-[教程地址](http://www.myhwx.com/sentence-label)
+[教程地址](http://www.myhwx.com/sentenceLabel)
+
+## 安装
+
+1. `pip` 安装
+ 
+通过在终端执行  `pip install sentenceLabel` 即可完成安装
+
+2. 源码安装
+
+下载源码，在源码目录中执行 `python setup.py install` 即可完成安装 
+
+3. 运行
+  
+终端执行 `sentence-label` 就可以运行此软件了
+
+> 当上面的命令不能运行此软件时可以执行下面的 `Python` 代码来使用本软件
+
+```python
+from sentenceLabel import sentenceLabel
+import sys
+sys.exit(sentenceLabel.main())
+```
+
+
+
 
 ## 界面介绍
 
