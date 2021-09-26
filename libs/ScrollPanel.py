@@ -14,8 +14,8 @@
 
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListWidget, QListWidgetItem, QTextBrowser
-from sentenceLabel.utils import Tools
-from sentenceLabel import utils
+from libs.utils import Tools
+from libs import utils
 class ScrollPanel(QWidget):
     
     Left = 0

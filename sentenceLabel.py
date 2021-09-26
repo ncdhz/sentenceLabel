@@ -16,10 +16,11 @@ import sys
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QApplication, QInputDialog, QMainWindow, QAction, QFileDialog, QMessageBox
 from PyQt5.QtCore import QMimeData, QUrl
-from sentenceLabel.MainPanel import MainPanel
+from libs.MainPanel import MainPanel
 import json
-from sentenceLabel.utils import Tools
-from sentenceLabel import utils
+from libs.resources import *
+from libs.utils import Tools
+from libs import utils
 
 class MainWindow(QMainWindow):
     
@@ -56,8 +57,8 @@ class MainWindow(QMainWindow):
         self.delete_all_action = QAction('Delete all', self)
 
         self.document_action = QAction('Document', self)
-        self.main_panel = MainPanel(self, 'icons/left.png', 'icons/right.png', 'icons/move-left.png', 'icons/move-right.png')
-        self.setWindowIcon(QIcon('icons/logo.png'))
+        self.main_panel = MainPanel(self, ':/left', ':/right', ':/move-left', ':/move-right')
+        self.setWindowIcon(QIcon(':/logo'))
         self.setCentralWidget(self.main_panel)
         self.menu_init()
         self.toolbar_init()
@@ -102,72 +103,72 @@ class MainWindow(QMainWindow):
         self.status_bar.showMessage('Ready Go !!!')
     
     def action_init(self):
-        self.open_action.setIcon(QIcon('icons/open.png'))
+        self.open_action.setIcon(QIcon(':/open'))
         self.open_action.setShortcut('Ctrl+O')
         self.open_action.setToolTip('Open an existing file')
         self.open_action.setStatusTip('Open an existing file')
         self.open_action.triggered.connect(self.open_func)
 
-        self.save_action.setIcon(QIcon('icons/save.png'))
+        self.save_action.setIcon(QIcon(':/save'))
         self.save_action.setShortcut('Ctrl+S')
         self.save_action.setToolTip('Save the file')
         self.save_action.setStatusTip('Save the file')
         self.save_action.triggered.connect(self.save_func)
 
-        self.save_as_action.setIcon(QIcon('icons/save-as.png'))
+        self.save_as_action.setIcon(QIcon(':/save-as'))
         self.save_as_action.setShortcut('Ctrl+A')
         self.save_as_action.setToolTip('Save the file to a specified location')
         self.save_as_action.setStatusTip('Save the file to a specified location')
         self.save_as_action.triggered.connect(self.save_as_func)
 
-        self.close_action.setIcon(QIcon('icons/close.png'))
+        self.close_action.setIcon(QIcon(':/close'))
         self.close_action.setShortcut('Ctrl+E')
         self.close_action.setToolTip('Close the file')
         self.close_action.setStatusTip('Close the file')
         self.close_action.triggered.connect(self.close_func)
 
 
-        self.left_action.setIcon(QIcon('icons/xiangzuo.png'))
+        self.left_action.setIcon(QIcon(':/xiangzuo'))
         self.left_action.setShortcut('A')
         self.left_action.setToolTip('Towards the left')
         self.left_action.setStatusTip('Towards the left')
         self.left_action.triggered.connect(self.left_func)
 
-        self.right_action.setIcon(QIcon('icons/xiangyou.png'))
+        self.right_action.setIcon(QIcon(':/xiangyou'))
         self.right_action.setShortcut('D')
         self.right_action.setToolTip('Towards the right')
         self.right_action.setStatusTip('Towards the right')
         self.right_action.triggered.connect(self.right_func)
 
-        self.jump_action.setIcon(QIcon('icons/jump.png'))
+        self.jump_action.setIcon(QIcon(':/jump'))
         self.jump_action.setShortcut('Ctrl+J')
         self.jump_action.setToolTip('Move to specified article')
         self.jump_action.setStatusTip('Move to specified article')
         self.jump_action.triggered.connect(self.jump_func)
 
-        self.delete_current_action.setIcon(QIcon('icons/d1.png'))
+        self.delete_current_action.setIcon(QIcon(':/d1'))
         self.delete_current_action.setToolTip('Delete current labels')
         self.delete_current_action.setStatusTip('Delete current labels')
         self.delete_current_action.triggered.connect(self.delete_current_func)
 
-        self.delete_all_action.setIcon(QIcon('icons/d2.png'))
+        self.delete_all_action.setIcon(QIcon(':/d2'))
         self.delete_all_action.setToolTip('Delete all labels')
         self.delete_all_action.setStatusTip('Delete all labels')
         self.delete_all_action.triggered.connect(self.delete_all_func)
 
-        self.copy_action.setIcon(QIcon('icons/copy.png'))
+        self.copy_action.setIcon(QIcon(':/copy'))
         self.copy_action.setShortcut('Ctrl+C')
         self.copy_action.setToolTip('Copy the text')
         self.copy_action.setStatusTip('Copy the text')
         self.copy_action.triggered.connect(self.copy_func)
 
-        self.paste_action.setIcon(QIcon('icons/paste.png'))
+        self.paste_action.setIcon(QIcon(':/paste'))
         self.paste_action.setShortcut('Ctrl+V')
         self.paste_action.setToolTip('Paste the text')
         self.paste_action.setStatusTip('Paste the text')
         self.paste_action.triggered.connect(self.paste_func)
 
-        self.document_action.setIcon(QIcon('icons/document.png'))
+        self.document_action.setIcon(QIcon(':/document'))
         self.document_action.setShortcut('Ctrl+D')
         self.document_action.setToolTip('Open the document')
         self.document_action.setStatusTip('Open the document')

@@ -1,0 +1,22 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file alias="close">icons/close.png</file>
+        <file alias="copy">icons/copy.png</file>
+        <file alias="d1">icons/d1.png</file>
+        <file alias="d2">icons/d2.png</file>
+        <file alias="document">icons/document.png</file>
+        <file alias="jump">icons/jump.png</file>
+        <file alias="left">icons/left.png</file>
+        <file alias="logo">icons/logo.png</file>
+        <file alias="move-left">icons/move-left.png</file>
+        <file alias="move-right">icons/move-right.png</file>
+        <file alias="open">icons/open.png</file>
+        <file alias="paste">icons/paste.png</file>
+        <file alias="right">icons/right.png</file>
+        <file alias="save-as">icons/save-as.png</file>
+        <file alias="save">icons/save.png</file>
+        <file alias="xiangyou">icons/xiangyou.png</file>
+        <file alias="xiangzuo">icons/xiangzuo.png</file>
+    </qresource>
+</RCC>
