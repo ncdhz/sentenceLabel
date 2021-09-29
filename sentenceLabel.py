@@ -198,6 +198,7 @@ class MainWindow(QMainWindow):
         save = self.save_file()
         if save == QMessageBox.Yes or save == QMessageBox.No:
             event.accept()
+            utils.remove_segmentation_file_path()
         else:
             event.ignore()
 
@@ -325,7 +326,7 @@ class MainWindow(QMainWindow):
 
 
     def document_func(self):
-        QDesktopServices.openUrl(QUrl('http://www.myhwx.com/sentence-label'))
+        QDesktopServices.openUrl(QUrl('http://www.myhwx.com/sentenceLabel'))
 
     def open_func(self):
         file, _ = QFileDialog.getOpenFileName(self, 'Open File', './', 'Files (*.txt *.json)')

@@ -1,22 +1,25 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file alias="close">icons/close.png</file>
-        <file alias="copy">icons/copy.png</file>
-        <file alias="d1">icons/d1.png</file>
-        <file alias="d2">icons/d2.png</file>
-        <file alias="document">icons/document.png</file>
-        <file alias="jump">icons/jump.png</file>
-        <file alias="left">icons/left.png</file>
-        <file alias="logo">icons/logo.png</file>
-        <file alias="move-left">icons/move-left.png</file>
-        <file alias="move-right">icons/move-right.png</file>
-        <file alias="open">icons/open.png</file>
-        <file alias="paste">icons/paste.png</file>
-        <file alias="right">icons/right.png</file>
-        <file alias="save-as">icons/save-as.png</file>
-        <file alias="save">icons/save.png</file>
-        <file alias="xiangyou">icons/xiangyou.png</file>
-        <file alias="xiangzuo">icons/xiangzuo.png</file>
+        <file alias="close">resources/icons/close.png</file>
+        <file alias="copy">resources/icons/copy.png</file>
+        <file alias="d1">resources/icons/d1.png</file>
+        <file alias="d2">resources/icons/d2.png</file>
+        <file alias="document">resources/icons/document.png</file>
+        <file alias="jump">resources/icons/jump.png</file>
+        <file alias="left">resources/icons/left.png</file>
+        <file alias="logo">resources/icons/logo.png</file>
+        <file alias="move-left">resources/icons/move-left.png</file>
+        <file alias="move-right">resources/icons/move-right.png</file>
+        <file alias="open">resources/icons/open.png</file>
+        <file alias="paste">resources/icons/paste.png</file>
+        <file alias="right">resources/icons/right.png</file>
+        <file alias="save-as">resources/icons/save-as.png</file>
+        <file alias="save">resources/icons/save.png</file>
+        <file alias="xiangyou">resources/icons/xiangyou.png</file>
+        <file alias="xiangzuo">resources/icons/xiangzuo.png</file>
+    </qresource>
+    <qresource>
+        <file alias="english-segmentation_file">resources/punkt/english.pickle</file>
     </qresource>
 </RCC>

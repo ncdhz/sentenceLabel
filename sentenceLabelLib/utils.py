@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from PyQt5.QtCore import QFile
+import tempfile
+from os import path
+import os
+
 class Tools:
     Answer = 'answer'
     
@@ -35,8 +40,30 @@ class Tools:
     
     SentName = 'sentName'
 
+    SegmentationFilePath = ''
+
+def remove_segmentation_file_path():
+    if path.isfile(Tools.SegmentationFilePath):
+        os.remove(Tools.SegmentationFilePath)
+
+def get_segmentation_file_path():
+    if Tools.SegmentationFilePath != '':
+        return Tools.SegmentationFilePath
+    segmentation_file = QFile(':/english-segmentation_file')
+    segmentation_file.open(QFile.ReadOnly)
+    segmentation_file_all_data = segmentation_file.readAll()
+
+    tmpfd = tempfile.TemporaryFile(suffix='.pickle', delete=False)
+    tmpfd.write(segmentation_file_all_data)
+    Tools.SegmentationFilePath = tmpfd.name.replace('\\', '/')
+    tmpfd.close()
+    segmentation_file.close()
+    return Tools.SegmentationFilePath
+    
+
 def SegmentationFunc():
-    return f'from nltk.tokenize import sent_tokenize\nsent_list = sent_tokenize({Tools.Article})'
+    file_path = get_segmentation_file_path()
+    return f"from nltk.data import load\ntoken = load(f'file://{file_path}')\nsent_list = token.tokenize({Tools.Article})"
 
 def refresh():
     Tools.Answer = 'answer'
