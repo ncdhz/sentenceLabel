@@ -53,7 +53,7 @@ def get_segmentation_file_path():
     segmentation_file.open(QFile.ReadOnly)
     segmentation_file_all_data = segmentation_file.readAll()
 
-    tmpfd = tempfile.TemporaryFile(suffix='.pickle', delete=False)
+    tmpfd = tempfile.NamedTemporaryFile(suffix='.pickle', delete=False)
     tmpfd.write(segmentation_file_all_data)
     Tools.SegmentationFilePath = tmpfd.name.replace('\\', '/')
     tmpfd.close()
