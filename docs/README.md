@@ -21,7 +21,7 @@ C: 回家睡觉
 
 ## 教程地址
 
-[教程地址](http://www.myhwx.com/sentenceLabel)
+[教程地址](https://ncdhz.github.io/sentenceLabel/)
 
 ## 安装
 
