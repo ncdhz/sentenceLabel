@@ -326,7 +326,7 @@ class MainWindow(QMainWindow):
 
 
     def document_func(self):
-        QDesktopServices.openUrl(QUrl('http://www.myhwx.com/sentenceLabel'))
+        QDesktopServices.openUrl(QUrl('https://ncdhz.github.io/sentenceLabel'))
 
     def open_func(self):
         file, _ = QFileDialog.getOpenFileName(self, 'Open File', './', 'Files (*.txt *.json)')
