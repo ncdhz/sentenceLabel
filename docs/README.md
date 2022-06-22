@@ -45,9 +45,6 @@ import sys
 sys.exit(sentenceLabel.main())
 ```
 
-
-
-
 ## 界面介绍
 
 1. 整体界面
